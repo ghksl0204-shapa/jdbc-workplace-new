@@ -1,0 +1,28 @@
+package com.kh.species.model.service;
+
+import java.util.List;
+
+import com.kh.species.model.dao.SpeciesDao;
+import com.kh.species.model.dto.SpeciesDto;
+
+public class SpeciesService {
+
+	private SpeciesDao sdao = new SpeciesDao(); 
+	
+	public int save(SpeciesDto sd) {
+		// speciesName 의 길이, 중복검사, 유효성검사 -> 나중에 천천히
+		return sdao.save(sd);
+	}
+
+	public List<SpeciesDto> findAll() {
+		return sdao.findAll();
+	}
+
+	public int update(SpeciesDto sd) {
+		return sdao.update(sd);
+	}
+
+	public int delete(String speciesId) {
+		return sdao.delete(speciesId);
+	}
+}

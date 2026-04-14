@@ -1,0 +1,5 @@
+package com.kh.zone.model.dao;
+
+public class ZoneDao {
+
+}

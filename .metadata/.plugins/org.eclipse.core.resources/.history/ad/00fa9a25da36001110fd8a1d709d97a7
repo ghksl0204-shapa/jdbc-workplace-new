@@ -1,0 +1,16 @@
+package com.kh.species.model.dao;
+
+import com.kh.species.model.dto.SpeciesDto;
+
+public class SpeciesDao {
+
+	/*
+	 * 오늘의 주인공 JDBC
+	 * 
+	 * 
+	 */
+	public void save(SpeciesDto sd) {
+		
+	}
+
+}

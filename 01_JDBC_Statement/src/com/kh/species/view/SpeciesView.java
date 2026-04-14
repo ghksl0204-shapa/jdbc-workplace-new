@@ -1,0 +1,159 @@
+package com.kh.species.view;
+
+import java.util.List;
+import java.util.Scanner;
+
+import com.kh.species.controller.SpeciesController;
+import com.kh.species.model.dto.SpeciesDto;
+
+public class SpeciesView {
+
+	private Scanner scan = new Scanner(System.in);
+	private SpeciesController sc = new SpeciesController();
+	
+	public void mainMenu() {
+		// 오늘 실습 겸 숙제
+		// 테이블 3종세트 오늘 배운 구조로 만들기
+		while(true) {
+			System.out.println();
+			System.out.println("--- 종 관리 프로그램 ---");
+			System.out.println();
+			System.out.println("1. 종 추가하기");
+			System.out.println("2. 종 전체조회하기");
+			System.out.println("3. 종 정보변경하기");
+			System.out.println("4. 종 삭제하기");
+			System.out.println("5. 아이디로 검색하기");
+			System.out.println("6. 이름 키워드로 검색하기");
+			System.out.println("9. 프로그램 종료하기");
+			System.out.print("메뉴를 선택해주세요 > ");
+			String menu = scan.nextLine();
+			
+			switch(menu) {
+			case "1" : save(); break;
+			case "2" : findAll(); break;
+			case "3" : update(); break;
+			case "4" : delete(); break;
+			case "5" : findById(); break;
+			case "6" : findByKeyword(); break;
+			case "9" : scan.close(); return;
+			default : System.out.println("없는 메뉴입니다."); continue;
+			}
+		}
+	}
+	
+	private void save() {
+		System.out.println("종 추가~~");
+		System.out.print("종 이름을 입력하세요 > ");
+		String speciesName = scan.nextLine();
+		System.out.print("종 분류를 입력하세요 > ");
+		String speciesClass = scan.nextLine();
+		
+		int result = sc.save(speciesName, speciesClass);
+		
+		// Controller 에서 반환받은 값으로 결과 출력
+		if(result > 0) {
+			System.out.println();
+			System.out.println("종 추가에 성공했습니다.");
+			System.out.println();
+		} else {
+			System.out.println();
+			System.out.println("종 추가에 실패했습니다.");
+			System.out.println();
+		}
+	}
+	
+	private void findAll() {
+		System.out.println();
+		System.out.println("종 전체 조회하기");
+		
+		// 컨트롤러에게 종 전체 데이터 요청
+		List<SpeciesDto> list = sc.findAll();
+		
+		// 뷰에서 2절
+		System.out.println();
+		System.out.println("조회된 종 수는 총 : " + list.size() + "개 입니다.");
+		// 조회결과가 있을 수도 있음
+		// 조회결과가 없을 수도 있음
+		if(list.isEmpty()) {
+			System.out.println("조회결과가 존재하지 않습니다.");
+		} else {
+			for(SpeciesDto sd : list) {
+				System.out.println("======================================================");
+				System.out.print("번호 : " + sd.getSpeciesId() + ", ");
+				System.out.print("종이름 : " + sd.getSpeciesName() + ", ");
+				System.out.print("종분류 : " + sd.getSpeciesClass());
+				System.out.println();
+				System.out.println("======================================================");
+			}
+		}
+	}
+	
+	private void update() {
+		// SPECIES_ID 값을 입력받아서
+		// SPECIES_NAME과 SPRCIES_CLASS값을 수정하는 기능
+		System.out.println("종 수정기능입니당~");
+		System.out.print("수정하실 종의 ID값을 입력해주세요 > ");
+		String speciesId = scan.nextLine();
+		System.out.print("수정하실 종 이름을 입력하세요 > ");
+		String speciesName = scan.nextLine();
+		System.out.print("수정하실 종 분류를 입력하세요 > ");
+		String speciesClass = scan.nextLine();
+		
+		int result = sc.update(new SpeciesDto(speciesId, speciesName, speciesClass));
+		
+		if(result > 0) {
+			System.out.println("종 변경에 성공했습니다!");
+		} else {
+			System.out.println("종 변경에 실패했습니다...");
+		}
+	}
+	
+	private void delete() {
+		System.out.println("종 삭제 서비스입니다!");
+		System.out.print("삭제하실 ID를 입력해주세요 > ");
+		String speciesId = scan.nextLine();
+		
+		int result = sc.delete(speciesId);
+		
+		if(result > 0) {
+			System.out.println("삭제 성공 !!! ");
+		} else {
+			System.out.println("삭제 실패 ...");
+		}
+	}
+	
+	private void findById() {
+		// 사용자에게 SPECIES_ID를 입력받아서 조회된 결과를 출력
+		System.out.println();
+		System.out.println("아이디로 검색 서비스입니다.");
+		System.out.print("검색하실 아이디를 입력해주세요 > ");
+		String speciesId = scan.nextLine();
+		
+		SpeciesDto result = sc.findById(speciesId);
+		
+		if(result != null) {
+			System.out.println();
+			System.out.println(result.getSpeciesClass() + " 검색결과!");
+			System.out.println("종이름 : " + result.getSpeciesName());
+			System.out.println("종분류 : " + result.getSpeciesClass());
+			System.out.println();
+		} else {
+			System.out.println("아이디가 존재하지 않습니다.");
+		}
+	}
+	
+	private void findByKeyword() {
+		System.out.println();
+		System.out.print("검색하고 싶은 키워드를 입력해주세요 > ");
+		String keyword = scan.nextLine();
+		
+		List<SpeciesDto> list = sc.findByKeyword(keyword);
+		if(list.isEmpty()) {
+			System.out.println("조회 결과가 존재하지 않습니다.");
+		} else {
+			for(SpeciesDto sd : list) {
+				System.out.println(sd);
+			}
+		}
+	}
+}

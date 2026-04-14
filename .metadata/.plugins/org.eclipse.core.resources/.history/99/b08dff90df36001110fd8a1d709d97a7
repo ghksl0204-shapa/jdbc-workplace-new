@@ -1,0 +1,16 @@
+package com.kh.species.model.service;
+
+import com.kh.species.model.dao.SpeciesDao;
+import com.kh.species.model.dto.SpeciesDto;
+
+public class SpeciesService {
+
+	private SpeciesDao sdao = new SpeciesDao(); 
+	
+	public void save(SpeciesDto sd) {
+		// speciesName 의 길이, 중복검사, 유효성검사 -> 나중에 천천히
+		sdao.save(sd);
+		
+	}
+
+}

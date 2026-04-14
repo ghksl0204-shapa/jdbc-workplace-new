@@ -1,0 +1,9 @@
+package com.kh.zone.view;
+
+public class ZoneView {
+
+	public void mainMenu() {
+		
+	}
+
+}

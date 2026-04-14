@@ -1,0 +1,78 @@
+package com.kh.zone.view;
+
+import java.util.List;
+import java.util.Scanner;
+
+import com.kh.zone.controller.ZoneController;
+import com.kh.zone.model.dto.ZoneDto;
+
+public class ZoneView {
+
+	private Scanner sc = new Scanner(System.in);
+	private ZoneController zc = new ZoneController();
+	
+	public void mainMenu() {
+		
+		while(true) {
+			System.out.println();
+			System.out.println("--- 지역관리 프로그램 ---");
+			System.out.println("1. 지역추가");
+			System.out.println("2. 지역전체조회");
+			System.out.println("3. 지역수정");
+			System.out.println("0. 프로그램 종료");
+			System.out.print("메뉴 선택 > ");
+			String menu = sc.nextLine();
+			
+			switch(menu) {
+			case "1" : save(); break;
+			case "2" : findAll(); break;
+			case "3" : update(); break;
+			case "0" : System.out.println("프로그램 종료"); return;
+			}
+		}
+	}
+
+	private void save() {
+		System.out.println();
+		System.out.println("추가할 지역의 정보를 입력해주세요");
+		System.out.print("이름 : ");
+		String name = sc.nextLine();
+		System.out.print("실내/외 : ");
+		String type = sc.nextLine();
+		
+		int result = zc.save(new ZoneDto(name, type));
+		
+		if(result > 0) {
+			System.out.println("추가성공 !");
+		} else {
+			System.out.println("추가실패 !");
+		}
+	}
+	
+	private void findAll(){
+		System.out.println();
+		List<ZoneDto> list = zc.findAll();
+		if(!list.isEmpty()) {
+			for(ZoneDto zd : list) {
+				System.out.println("========================================================================");
+				System.out.println("ID : " + zd.getZoneId() + "이름 : " + zd.getZoneName() + "타입 : " + zd.getZoneType());
+				System.out.println("========================================================================");
+			}
+		} else {
+			System.out.println("조회 결과가 없습니다.");
+		}
+	}
+	
+	private void update() {
+		System.out.println();
+		System.out.println("== 지역정보 수정메뉴 ==");
+		System.out.print("수정할 지역 ID를 입력해주세요 > ");
+		String id = sc.nextLine();
+		System.out.print("수정할 지역 이름을 입력해주세요 > ");
+		String name = sc.nextLine();
+		System.out.print("수정할 타입을 입력해주세요 > ");
+		String type = sc.nextLine();
+		
+		int result = zc.update(new ZoneDto(id, name, type));
+	}
+}

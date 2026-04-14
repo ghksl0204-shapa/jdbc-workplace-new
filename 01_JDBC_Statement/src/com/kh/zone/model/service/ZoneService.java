@@ -1,0 +1,28 @@
+package com.kh.zone.model.service;
+
+import java.util.List;
+
+import com.kh.zone.model.dao.ZoneDao;
+import com.kh.zone.model.dto.ZoneDto;
+
+public class ZoneService {
+
+	private ZoneDao zd = new ZoneDao();
+	
+	public int save(ZoneDto zoneDto) {
+		return zd.save(zoneDto);
+	}
+
+	public List<ZoneDto> findAll() {
+		return zd.findAll();
+	}
+
+	public int update(ZoneDto zoneDto) {
+		return zd.update(zoneDto);
+	}
+
+	public int delete(String id) {
+		return zd.delete(id);
+	}
+
+}

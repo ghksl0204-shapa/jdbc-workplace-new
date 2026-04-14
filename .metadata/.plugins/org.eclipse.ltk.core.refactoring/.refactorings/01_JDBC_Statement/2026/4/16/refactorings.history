@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">
+<refactoring comment="Rename resource &apos;01_JDBC_Statement/src/com/kh/species/run/Run.java&apos; to &apos;SpeciesRun.java&apos;" description="Rename resource &apos;Run.java&apos;" flags="7" id="org.eclipse.ltk.core.refactoring.rename.resource" input="src/com/kh/species/run/Run.java" name="SpeciesRun.java" stamp="1776039853204" updateReferences="true"/>
+</session>

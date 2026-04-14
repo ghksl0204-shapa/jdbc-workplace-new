@@ -1,0 +1,10 @@
+package com.kh.select.run;
+
+public class SelectSpeciesRun {
+
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+
+	}
+
+}
