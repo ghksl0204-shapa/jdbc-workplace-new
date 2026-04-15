@@ -1,0 +1,5 @@
+package com.kh.post.model.dao;
+
+public class PostDao {
+
+}

@@ -7,12 +7,13 @@ import java.util.List;
 
 import com.kh.board.model.dao.BoardDao;
 import com.kh.board.model.dto.BoardDto;
+import com.kh.post.dto.PostDto;
 
 public class BoardService {
 
-	public int inserBoard(BoardDto boardDto) {
+	public int insertBoard(BoardDto boardDto) {
 		Connection conn = getConnection();
-		int result = new BoardDao().inserBoard(conn, boardDto); 
+		int result = new BoardDao().insertBoard(conn, boardDto); 
 		if(result > 0) {
 			commit(conn);
 		}
@@ -35,6 +36,23 @@ public class BoardService {
 		}
 		close(conn);
 		return result;
+	}
+
+	public int deleteBoard(int boardNo) {
+		Connection conn = getConnection();
+		int result = new BoardDao().deleteBoard(conn, boardNo);
+		if(result > 0) {
+			commit(conn);
+		}
+		close(conn);
+		return result;
+	}
+
+	public List<PostDto> pickBoard(int boardNo) {
+		Connection conn = getConnection();
+		List<PostDto> posts = new BoardDao().pickBoard(conn, boardNo);
+		close(conn);
+		return posts;
 	}
 
 }

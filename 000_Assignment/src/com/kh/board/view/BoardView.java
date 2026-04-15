@@ -6,6 +6,7 @@ import java.util.Scanner;
 
 import com.kh.board.controller.BoardController;
 import com.kh.board.model.dto.BoardDto;
+import com.kh.post.dto.PostDto;
 
 public class BoardView {
 
@@ -20,14 +21,18 @@ public class BoardView {
 			System.out.println("2. 게시판 전체목록확인");
 			System.out.println("3. 게시판 수정");
 			System.out.println("4. 게시판 삭제");
+			System.out.println("5. 게시판 보기");
+			System.out.println("6. 게시글 작성");
+			System.out.println("0. 프로그램 종료");
 			System.out.print("메뉴선택 > ");
 			String menu = sc.nextLine();
 			switch(menu) {
 			case "1" : insertBoard(); break;
 			case "2" : selectBoard(); break;
 			case "3" : updateBoard(); break;
-			case "4" : break;
-			case "0" : break;
+			case "4" : deleteBoard(); break;
+			case "5" : pickBoard(); break;
+			case "0" : return;
 			default : System.out.println("잘못된 메뉴 선택"); continue;
 			}
 		}
@@ -91,4 +96,50 @@ public class BoardView {
 			System.out.println("수정실패");
 		}
 	}
+	
+	private void deleteBoard() {
+		
+		System.out.println();
+		System.out.println("게시판 삭제메뉴");
+		System.out.print("삭제하실 게시판 번호를 입력해주세요 > ");
+		int boardNo = 0;
+		try {
+			boardNo = sc.nextInt();
+			sc.nextLine();
+		} catch(InputMismatchException e) {
+			System.out.println("숫자를 입력해주세요");
+		}
+		int result = new BoardController().deleteBoard(boardNo);
+		if(result > 0) {
+			System.out.println("삭제 성공");
+		} else {
+			System.out.println("삭제 실패");
+		}
+	}
+	
+	private void pickBoard() {
+		
+		System.out.println();
+		selectBoard();
+		System.out.print("게시판 번호를 선택해주세요 > ");
+		int boardNo = Integer.parseInt(sc.nextLine());
+		List<PostDto> posts = new BoardController().pickBoard(boardNo);
+		
+		if(posts.isEmpty()) {
+			System.out.println("게시글이 없습니다.");
+		} else {
+			for(PostDto pd : posts) {
+				System.out.println("=======================================");
+				System.out.println("작성번호 : " + pd.getPostNo());
+				System.out.println("---------------------------------------");
+				System.out.println("제목 : " + pd.getPostName());
+				System.out.println("---------------------------------------");
+				System.out.println("작성일 : " + pd.getPostDate());
+				System.out.println("---------------------------------------");
+				System.out.println("내용 : " + pd.getPostContent());
+				System.out.println("=======================================");
+			}
+		}
+	}
 }
+

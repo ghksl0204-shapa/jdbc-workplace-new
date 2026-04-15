@@ -1,8 +1,12 @@
 package com.kh.board.common;
 
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
+import java.util.Properties;
 
 public class JdbcTemplate {
 
@@ -16,10 +20,16 @@ public class JdbcTemplate {
 	
 	public static Connection getConnection() {
 		try {
-			Connection conn = DriverManager.getConnection("jdbc:oracle:thin:@127.0.0.1:1521:XE", "C##SP", "SP");
+			Properties prop = new Properties();
+			prop.load(new FileInputStream("resources/connection.properties"));
+			Connection conn = DriverManager.getConnection(prop.getProperty("URL"), prop.getProperty("USERNAME"), prop.getProperty("PASSWORD"));
 			conn.setAutoCommit(false);
 			return conn;
 		} catch (SQLException e) {
+			e.printStackTrace();
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
 			e.printStackTrace();
 		}
 		return null;

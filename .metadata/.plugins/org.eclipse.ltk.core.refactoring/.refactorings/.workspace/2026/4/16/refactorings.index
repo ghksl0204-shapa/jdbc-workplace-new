@@ -3,3 +3,4 @@
 1776078801661	Delete resource '01_JDBC_Statement/src/com/kh/keeper/model/controller'
 1776126016297	Rename resource '02_JDBC_Templete'
 1776127240912	Delete resource '02_JDBC_Template/src/com/kh/keeper/model/vo/Keeper.java'
+1776236596636	Delete resource '03_JDBC/resources/member-mapper.out.xml'

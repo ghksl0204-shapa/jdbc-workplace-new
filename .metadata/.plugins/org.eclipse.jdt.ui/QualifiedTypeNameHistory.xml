@@ -3,7 +3,16 @@
     <fullyQualifiedTypeName name="java.sql.SQLException"/>
     <fullyQualifiedTypeName name="java.nio.file.spi.FileSystemProvider"/>
     <fullyQualifiedTypeName name="com.kh.zone.view.ZoneView"/>
-    <fullyQualifiedTypeName name="java.sql.DriverManager"/>
     <fullyQualifiedTypeName name="java.sql.Connection"/>
     <fullyQualifiedTypeName name="java.sql.Statement"/>
+    <fullyQualifiedTypeName name="com.kh.keeper.controller.KeeperController"/>
+    <fullyQualifiedTypeName name="java.sql.Date"/>
+    <fullyQualifiedTypeName name="com.kh.member.controller.MemberController"/>
+    <fullyQualifiedTypeName name="com.kh.keeper.common.JdbcTemplate"/>
+    <fullyQualifiedTypeName name="com.kh.member.exception.MemberIdTooLargeException"/>
+    <fullyQualifiedTypeName name="com.kh.member.exception.DuplicateMemberIdException"/>
+    <fullyQualifiedTypeName name="java.util.Scanner"/>
+    <fullyQualifiedTypeName name="java.sql.DriverManager"/>
+    <fullyQualifiedTypeName name="com.kh.board.common.JdbcTemplate"/>
+    <fullyQualifiedTypeName name="java.util.InputMismatchException"/>
 </qualifiedTypeNameHistroy>
