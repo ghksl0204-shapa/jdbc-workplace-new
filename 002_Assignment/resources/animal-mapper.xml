@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  <mapper namespace="animalMapper">
+  
+  	<insert id="save"
+  	    	parameterType="animal">
+		INSERT
+		  INTO
+		       ANIMAL
+		VALUES
+		       (
+		       'A' || SEQ_ANIMAL_ID.NEXTVAL,
+		       #{animalName},
+		       #{speciesId},
+		       #{zoneId},
+		       #{keeperId},
+		       #{gender},
+		       #{weightKg},
+		       SYSDATE,
+		       SYSDATE
+		       )         	
+  	</insert>
+  	
+  	<select id="findAll"
+  	       	resultType="animal">
+  		SELECT
+  		       ANIMAL_ID,
+  		       ANIMAL_NAME,
+  		       SPECIES_NAME speciesID,
+  		       ZONE_NAME zoneId,
+  		       NVL(KEEPER_NAME, '없음') keeperId,
+  		       GENDER,
+  		       WEIGHT_KG,
+  		       BIRTH_DATE,
+  		       ARRIVAL_DATE
+  		  FROM 
+  		       ANIMAL
+  		  JOIN
+  		       SPECIES USING(SPECIES_ID)
+  		  JOIN
+  		       ZONE USING(ZONE_ID)
+  		  LEFT
+  		  JOIN
+  		       KEEPER USING(KEEPER_ID)               
+  		 ORDER
+  		    BY
+  		       ANIMAL_ID DESC           
+  	
+  	</select>
+  
+  </mapper>

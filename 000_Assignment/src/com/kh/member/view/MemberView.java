@@ -2,6 +2,8 @@ package com.kh.member.view;
 
 import java.util.Scanner;
 
+import com.kh.member.controller.MemberController;
+
 public class MemberView {
 	
 	private Scanner sc = new Scanner(System.in);
@@ -34,6 +36,10 @@ public class MemberView {
 		System.out.println("회원가입서비스");
 		System.out.print("아이디를 입력하세요 > ");
 		String memberId = sc.nextLine();
+		
+		int result = new MemberController().checkId(memberId);
+		
+		System.out.println("");
 		
 	}
 	

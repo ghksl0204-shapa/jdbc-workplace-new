@@ -1,0 +1,30 @@
+package com.kh.animal.model.service;
+
+import java.util.List;
+
+import org.apache.ibatis.session.SqlSession;
+
+import com.kh.animal.common.Template;
+import com.kh.animal.model.dao.AnimalDao;
+import com.kh.animal.model.dto.AnimalDto;
+
+public class AnimalService {
+
+	public int save(AnimalDto animal) {
+		SqlSession session = Template.getSession();
+		int result = new AnimalDao().save(session, animal);
+		if(result > 0) {
+			session.commit();
+		}
+		session.close();
+		return result;
+	}
+
+	public List<AnimalDto> findAll() {
+		SqlSession session = Template.getSession();
+		List<AnimalDto> animals = new AnimalDao().findAll(session);
+		session.close();
+		return animals;
+	}
+
+}
