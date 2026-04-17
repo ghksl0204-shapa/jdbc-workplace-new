@@ -1,10 +1,14 @@
 package com.kh.animal.view;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Scanner;
 
 import com.kh.animal.controller.AnimalController;
+import com.kh.animal.controller.KeeperController;
 import com.kh.animal.model.dto.AnimalDto;
+import com.kh.animal.model.dto.KeeperDto;
 
 public class AnimalView {
 
@@ -36,6 +40,10 @@ public class AnimalView {
 			System.out.println("2. 동물 전체조회");
 			System.out.println("3. 동물 단일 조회하기");
 			System.out.println("4. 동물 이름 키워드로 조회하기");
+			System.out.println("5. 사육사 및 담당동물 조회하기");
+			System.out.println("6. 사육사 검색하기");
+			System.out.println("7. 동물 정보 수정하기");
+			System.out.println("8. 동물 정보 삭제하기");
 			System.out.println("0. 프로그램 종료");
 			System.out.print("메뉴 선택 > ");
 			String menu = sc.nextLine();
@@ -45,6 +53,10 @@ public class AnimalView {
 			case "2" : findAll(); break;
 			case "3" : findById(); break;
 			case "4" : findByKeyword(); break;
+			case "5" : selectKeeperAndAnimals(); break;
+			case "6" : selectKeeperByCondition(); break;
+			case "7" : updateAnimal(); break;
+			case "8" : deleteAnimal(); break;
 			case "0" : sc.close(); return;
 			}
 		}
@@ -149,6 +161,85 @@ public class AnimalView {
 			for(AnimalDto animal : animals) {
 				System.out.println(animal);
 			}
+		}
+	}
+	
+	private void selectKeeperAndAnimals() {
+		// 사육사 전체조회 + 각 사육사들이 담당하는 애니멀 전체조회
+		List<KeeperDto> keepers = new KeeperController().selectKeeperAndAnimals();
+		
+		for(KeeperDto k : keepers) {
+			System.out.println("===================================");
+			System.out.println(k.getKeeperName() + "의 담당동물");
+			System.out.println(k.getAnimals());
+			System.out.println("===================================");
+		}
+	}
+	
+	private void selectKeeperByCondition() {
+		System.out.println("사육사 검색 서비스입니다.");
+		System.out.print("검색 조건을 선택해주세요 > ");
+		System.out.print("1. 사육사번호 / 2. 사육사이름 / 3. 담당구역 > ");
+		String menuNo = sc.nextLine();
+		System.out.print("검색하실 키워드를 입력해주세요 > ");
+		String keyword = sc.nextLine();
+		// 포함되면 다 찾기
+		Map<String, String> arguments = new HashMap();
+		arguments.put("menuNo", menuNo);
+		arguments.put("keyword", keyword);
+		List<KeeperDto> keepers = new KeeperController().selectKeeperByCondition(arguments);
+		if(keepers.isEmpty()) {
+			System.out.println("조회된 결과가 존재하지 않습니다.");
+		} else {
+			for(KeeperDto k : keepers) {
+				System.out.println(k);
+			}
+		}
+	}
+	
+	private void updateAnimal() {
+		
+		System.out.println();
+		System.out.println("동물 정보 변경 서비스 입니다.");
+		findAll();
+		System.out.print("정보를 변경하실 동물의 번호를 입력해주세요 > ");
+		String animalId = sc.nextLine();
+		System.out.print("변경하실 구역 번호를 입력해주세요 > ");
+		String zoneId = sc.nextLine();
+		System.out.print("변경하실 사육사 번호를 입력해주세요 > ");
+		String keeperId = sc.nextLine();
+		System.out.print("변경하실 몸무게를 입력해주세요 > ");
+		double weightKg = sc.nextDouble();
+		sc.nextLine();
+		
+		AnimalDto animal = new AnimalDto();
+		animal.setAnimalId(animalId);
+		animal.setZoneId(zoneId);
+		animal.setKeeperId(keeperId);
+		animal.setWeightKg(weightKg);
+		
+		int result = ac.updateAnimal(animal);
+		
+		if(result > 0) {
+			System.out.println("수정 성공");
+		} else {
+			System.out.println("수정 실패");
+		}
+	}
+	
+	private void deleteAnimal() {
+		
+		System.out.println();
+		System.out.println("동물 삭제 서비스입니다.");
+		findAll();
+		System.out.print("정보를 삭제하실 동물의 번호를 입력해주세요 > ");
+		String animalId = sc.nextLine();
+		
+		int result = ac.deleteAnimal(animalId);
+		if(result > 0) {
+			System.out.println("삭제 성공");
+		} else {
+			System.out.println("삭제 실패");
 		}
 	}
 }
